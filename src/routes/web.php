@@ -16,4 +16,6 @@ Route::middleware(['auth'])->group(function () {
     })->name('home');
 
     Route::get('/tasks', [TaskController::class, 'showTasks'])->name('tasks.show');
+    Route::get('/tasks/create', [TaskController::class, 'createTask'])->name('tasks.create');
+    Route::post('/tasks/store', [TaskController::class, 'storeTask'])->name('tasks.store');
 });
