@@ -1,4 +1,4 @@
-# **Projeto Laravel com Docker**
+# **Projeto Gerenciamento de Tarefas - Laravel + Docker**
 
 Este é um projeto Laravel configurado para rodar com Docker. Abaixo estão as etapas para configurar e executar a aplicação no seu ambiente local.
 
@@ -7,8 +7,6 @@ Este é um projeto Laravel configurado para rodar com Docker. Abaixo estão as e
 - Docker e Docker Compose instalados em sua máquina.
 
 ## **Execute os passos abaixo para rodar o projeto**
-
-Se ainda não clonou o repositório, execute o comando abaixo para clonar o projeto:
 
 ```bash
 # Clone o repositório no endereço
