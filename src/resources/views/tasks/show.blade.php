@@ -16,44 +16,46 @@
   </div>
 </div>
 
-<table class="table table-bordered table-hover">
-    <thead class="table-light">
-        <tr>
-            <th>ID</th>
-            <th>Título</th>
-            <th>Descrição</th>
-            <th>Status</th>
-            <th>Data de Criação</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($tarefas as $tarefa)
-          @if(!empty($tarefa))
-            <tr id="tarefa-{{ $tarefa->id }}">
-              <td>{{ $tarefa->id }}</td>
-              <td>{{ $tarefa->title }}</td>
-              <td>{{ $tarefa->description }}</td>
-              <td>
-                  <span class="badge {{ $tarefa->status == 1 ? 'bg-success' : 'bg-warning' }}">
-                      {{ $tarefa->status == 1 ? 'Concluída' : 'Pendente' }}
-                  </span>
-              </td>
-              <td>{{ $tarefa->created_at->format('d/m/Y') }}</td>
-              <td>
-                  <button class="btn btn-sm btn-secondary btn-editar" data-id="{{ $tarefa->id }}" data-title="{{ $tarefa->title }}" data-description="{{ $tarefa->description }}">Editar</button>
-                  <button class="btn btn-sm btn-success btn-status" data-id="{{ $tarefa->id }}" data-title="{{ $tarefa->title }}" data-status="{{ $tarefa->status }}">Alterar Status</button>
-                  <button class="btn btn-sm btn-danger btn-excluir" data-id="{{ $tarefa->id }}">Excluir</button>
-              </td>
-            </tr>
-          @else
-            <tr>
-              <td colspan="6" class="text-center"><em>Nenhuma tarefa cadastrada</em></td>
-            </tr>
-          @endif
-        @endforeach
-    </tbody>
-</table>
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+      <thead class="table-light">
+          <tr>
+              <th>ID</th>
+              <th>Título</th>
+              <th>Descrição</th>
+              <th>Status</th>
+              <th>Data de Criação</th>
+              <th>Ações</th>
+          </tr>
+      </thead>
+      <tbody>
+          @foreach($tarefas as $tarefa)
+            @if(!empty($tarefa))
+              <tr id="tarefa-{{ $tarefa->id }}">
+                <td>{{ $tarefa->id }}</td>
+                <td>{{ $tarefa->title }}</td>
+                <td class="descricao-cell" title="{{ $tarefa->description }}">{{ $tarefa->description }}</td>
+                <td>
+                    <span class="badge {{ $tarefa->status == 1 ? 'bg-success' : 'bg-warning' }}">
+                        {{ $tarefa->status == 1 ? 'Concluída' : 'Pendente' }}
+                    </span>
+                </td>
+                <td>{{ $tarefa->created_at->format('d/m/Y') }}</td>
+                <td class="acoes-cell">
+                    <button class="btn btn-sm btn-secondary btn-editar w-100 mb-2" data-id="{{ $tarefa->id }}" data-title="{{ $tarefa->title }}" data-description="{{ $tarefa->description }}">Editar</button>
+                    <button class="btn btn-sm btn-success btn-status w-100 mb-2" data-id="{{ $tarefa->id }}" data-title="{{ $tarefa->title }}" data-status="{{ $tarefa->status }}">Alterar Status</button>
+                    <button class="btn btn-sm btn-danger btn-excluir w-100 mb-2" data-id="{{ $tarefa->id }}">Excluir</button>
+                </td>
+              </tr>
+            @else
+              <tr>
+                <td colspan="6" class="text-center"><em>Nenhuma tarefa cadastrada</em></td>
+              </tr>
+            @endif
+          @endforeach
+      </tbody>
+  </table>
+</div>
 
 <!-- Modal para edição -->
 <div class="modal fade" id="modalEditarTarefa" tabindex="-1" aria-labelledby="modalEditarTarefaLabel" aria-hidden="true">

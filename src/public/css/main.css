@@ -1,11 +1,28 @@
+/* Define um timer para as notificações feitas com o Toast */
 .toast-timer {
     height: 4px;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.6); /* Cor da barra */
+    background-color: rgba(255, 255, 255, 0.6);
     animation: toastTimerAnim 3s linear forwards;
 }
 
+/* Define a animação do timer do Toast */
 @keyframes toastTimerAnim {
     from { width: 100%; }
     to { width: 0%; }
+}
+
+/* Limitar a largura da descrição */
+.descricao-cell {
+    max-width: 200px;  
+    white-space: nowrap;  /* Não quebra linha */
+    overflow: hidden;  /* Esconde o conteúdo que ultrapassar */
+    text-overflow: ellipsis;  /* Exibe "..." se o texto for muito longo */
+    word-wrap: break-word;  /* Garante que palavras longas sejam tratadas corretamente */
+}
+
+/* Limitar o tamanho dos botões */
+.acoes-cell {
+    max-width: 120px;  /* Limita a largura dos botões */
+    overflow: hidden;  /* Esconde qualquer conteúdo além da largura */
 }

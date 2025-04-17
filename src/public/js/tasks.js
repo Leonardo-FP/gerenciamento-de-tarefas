@@ -49,17 +49,17 @@ document.addEventListener('DOMContentLoaded', () => {
             <tr id="tarefa-${task.id}">
                 <td>${task.id}</td>
                 <td>${task.title}</td>
-                <td>${task.description}</td>
+                <td class="descricao-cell" title="${task.description}">${task.description}</td>
                 <td>
                     <span class="badge ${task.status == 1 ? 'bg-success' : 'bg-warning'}">
                         ${task.status == 1 ? 'Concluída' : 'Pendente'}
                     </span>
                 </td>
                 <td>${task.created_at}</td>
-                <td>
-                    <button class="btn btn-sm btn-secondary btn-editar" data-id="${task.id}" data-title="${task.title}" data-description="${task.description}">Editar</button>
-                    <button class="btn btn-sm btn-success btn-status" data-id="${task.id}" data-title="${task.title}" data-status="${task.status}">Alterar Status</button>
-                    <button class="btn btn-sm btn-danger btn-excluir" data-id="${task.id}" data-title="${task.title}">Excluir</button>
+                <td class="acoes-cell">
+                    <button class="btn btn-sm btn-secondary btn-editar w-100 mb-2" data-id="${task.id}" data-title="${task.title}" data-description="${task.description}">Editar</button>
+                    <button class="btn btn-sm btn-success btn-status w-100 mb-2" data-id="${task.id}" data-title="${task.title}" data-status="${task.status}">Alterar Status</button>
+                    <button class="btn btn-sm btn-danger btn-excluir w-100 mb-2" data-id="${task.id}" data-title="${task.title}">Excluir</button>
                 </td>
             </tr>
         `;
