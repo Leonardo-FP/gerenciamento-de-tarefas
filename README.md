@@ -9,10 +9,10 @@ Este é um projeto Laravel configurado para rodar com Docker. Abaixo estão as e
 ## **Execute os passos abaixo para rodar o projeto**
 
 ```bash
-# Clone o repositório no endereço
+# Clone o repositório público presente no endereço
 https://github.com/Leonardo-FP/gerenciamento-de-tarefas
 
-# Configuração do ambiente
+# CONFIGURAÇÃO DO AMBIENTE
 
 ## Copie o arquivo .env
 cp .env.example .env
@@ -23,22 +23,24 @@ DB_HOST=laravel-mysql
 DB_PORT=3306
 DB_DATABASE=gerenciamento_de_tarefas
 DB_USERNAME=root
-DB_PASSWORD=12345678
+DB_PASSWORD=root
 
 ## Construa e rode os containers
-
 docker-compose up --build -d
 
-## Ajuste permissões de diretórios
-
+## Acesse o container do PHP
 docker exec -it laravel-php bash
 
+## Instale as dependências do projeto
+composer install
+
+## Ajuste permissões de diretórios
 chmod -R 775 storage
 chown -R www-data:www-data storage
 chmod -R 775 storage/framework
 
-## Gerar a Key do Laravel
-docker exec -it laravel-php php artisan key:generate
+## Gere a Key do Laravel
+php artisan key:generate
 
-## Rodar as migrations
-docker exec -it laravel-php php artisan migrate
+## Rode as migrations
+php artisan migrate
