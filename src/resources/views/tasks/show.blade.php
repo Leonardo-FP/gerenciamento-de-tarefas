@@ -11,6 +11,7 @@
 <table class="table table-bordered table-hover">
     <thead class="table-light">
         <tr>
+            <th>ID</th>
             <th>Título</th>
             <th>Descrição</th>
             <th>Status</th>
@@ -20,32 +21,39 @@
     </thead>
     <tbody>
         @foreach($tarefas as $tarefa)
-        <tr>
-            <td>{{ $tarefa->titulo }}</td>
-            <td>{{ $tarefa->descricao }}</td>
-            <td>
-                <span class="badge {{ $tarefa->status === 'concluida' ? 'bg-success' : 'bg-warning' }}">
-                    {{ ucfirst($tarefa->status) }}
-                </span>
-            </td>
-            <td>{{ $tarefa->created_at->format('d/m/Y') }}</td>
-            <td>
-                <button class="btn btn-sm btn-secondary btn-editar" data-id="{{ $tarefa->id }}" data-titulo="{{ $tarefa->titulo }}" data-descricao="{{ $tarefa->descricao }}">Editar</button>
-                <button class="btn btn-sm btn-success btn-concluir" data-id="{{ $tarefa->id }}">Concluir</button>
-                <button class="btn btn-sm btn-danger btn-excluir" data-id="{{ $tarefa->id }}">Excluir</button>
-            </td>
-        </tr>
+          @if(!empty($tarefa))
+            <tr id="tarefa-{{ $tarefa->id }}">
+              <td>{{ $tarefa->id }}</td>
+              <td>{{ $tarefa->title }}</td>
+              <td>{{ $tarefa->description }}</td>
+              <td>
+                  <span class="badge {{ $tarefa->status == 1 ? 'bg-success' : 'bg-warning' }}">
+                      {{ $tarefa->status == 1 ? 'Concluída' : 'Pendente' }}
+                  </span>
+              </td>
+              <td>{{ $tarefa->created_at->format('d/m/Y') }}</td>
+              <td>
+                  <button class="btn btn-sm btn-secondary btn-editar" data-id="{{ $tarefa->id }}" data-title="{{ $tarefa->title }}" data-description="{{ $tarefa->description }}">Editar</button>
+                  <button class="btn btn-sm btn-success btn-status" data-id="{{ $tarefa->id }}" data-title="{{ $tarefa->title }}" data-status="{{ $tarefa->status }}">Alterar Status</button>
+                  <button class="btn btn-sm btn-danger btn-excluir" data-id="{{ $tarefa->id }}">Excluir</button>
+              </td>
+            </tr>
+          @else
+            <tr>
+              <td colspan="6" class="text-center"><em>Nenhuma tarefa cadastrada</em></td>
+            </tr>
+          @endif
         @endforeach
     </tbody>
 </table>
-@endsection
 
-@section('scripts')
 <!-- Modal para edição -->
 <div class="modal fade" id="modalEditarTarefa" tabindex="-1" aria-labelledby="modalEditarTarefaLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form id="formEditarTarefa">
+      <form id="formEditarTarefa" action="{{ route('tasks.update') }}" method="POST">
+        @csrf
+
         <div class="modal-header">
           <h5 class="modal-title" id="modalEditarTarefaLabel">Editar Tarefa</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
@@ -53,20 +61,63 @@
         <div class="modal-body">
             <input type="hidden" id="tarefa-id" name="id">
             <div class="mb-3">
-                <label for="titulo" class="form-label">Título</label>
-                <input type="text" class="form-control" id="titulo" name="titulo" required>
+                <label for="title" class="form-label">Título</label>
+                <input type="text" class="form-control" id="title" name="title" required>
             </div>
             <div class="mb-3">
-                <label for="descricao" class="form-label">Descrição</label>
-                <textarea class="form-control" id="descricao" name="descricao" required></textarea>
+                <label for="description" class="form-label">Descrição</label>
+                <textarea class="form-control" id="description" name="description" required></textarea>
             </div>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary">Salvar alterações</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para alteração de status -->
+<div class="modal fade" id="modalAlterarStatus" tabindex="-1" aria-labelledby="modalAlterarStatusLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="formAlterarStatus" action="{{ route('tasks.updateStatus') }}" method="POST">
+        @csrf
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalAlterarStatusLabel">Alterar status</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="tarefa-alterarStatus-hidden-id" name="id">
+
+            <h6>Você tem certeza que deseja alterar o Status da seguinte tarefa para <strong id="tarefa-alterarStatus-status"></strong>?</h6>
+            <div class="d-flex justify-content-between mt-5 mb-3">
+              <div>
+                <label for="tarefa-alterarStatus-id" class="form-label">ID</label>
+                <input type="text" class="form-control bg-body-secondary" id="tarefa-alterarStatus-id" name="id" required readonly>
+              </div>
+              <div>
+                <label for="tarefa-alterarStatus-title" class="form-label">Título</label>
+                <input type="text" class="form-control bg-body-secondary" id="tarefa-alterarStatus-title" required readonly>
+              </div>
+            </div>
+
+          </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Salvar alterações</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
         </div>
       </form>
     </div>
   </div>
 </div>
 @endsection
+
+@section('scripts')
+  <!-- Importa os scripts responsáveis pelo controle dos formulários -->
+  <script src="{{ asset('js/tasks.js') }}"></script>
+@endsection
+
+

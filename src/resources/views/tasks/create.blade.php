@@ -11,6 +11,8 @@
         <form action="{{ route('tasks.store') }}" method="POST">
             @csrf
 
+            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}" required>
+
             <div class="mb-3">
                 <label for="title" class="form-label">Título</label>
                 <input type="text" class="form-control" id="title" name="title" required>
@@ -24,8 +26,8 @@
             <div class="mb-3">
                 <label for="status" class="form-label">Status</label>
                 <select class="form-select" id="status" name="status" required>
-                    <option value="pendente">Pendente</option>
-                    <option value="concluida">Concluída</option>
+                    <option value="0">Pendente</option>
+                    <option value="1">Concluída</option>
                 </select>
             </div>
 
