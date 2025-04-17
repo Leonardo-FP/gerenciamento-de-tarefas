@@ -9,7 +9,7 @@ class TaskController extends Controller
 {
     public function showTasks()
     {
-        $tarefas = Tasks::where('user_id', auth()->user()->id)->get();
+        $tarefas = Tasks::where('user_id', auth()->user()->id)->where('active', 1)->get();
  
         return view('tasks.show', compact('tarefas'));
     }
@@ -86,5 +86,33 @@ class TaskController extends Controller
                 'created_at'  => $task->created_at->format('d/m/Y'),
             ],
         ]);
+    }
+
+    public function deleteTask(Request $request)
+    {
+        $task = Tasks::find($request->id);
+
+        if (!$task) {
+            return response()->json(['error' => 'Tarefa não encontrada.'], 404);
+        }
+
+        $task->active = 0;
+        $task->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    public function filter(Request $request)
+    {
+        $query = Tasks::where('user_id', auth()->user()->id)->where('active', 1);
+
+        if ($request->has('status') && in_array($request->status, ['0', '1'])) {
+            $query->where('status', $request->status);
+        }
+
+        $tarefas = $query->get();
+
+        // Retorna só o HTML do tbody
+        return view('partials.tasks-tbody', compact('tarefas'))->render();
     }
 }

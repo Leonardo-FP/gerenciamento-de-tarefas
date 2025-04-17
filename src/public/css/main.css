@@ -1,0 +1,11 @@
+.toast-timer {
+    height: 4px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.6); /* Cor da barra */
+    animation: toastTimerAnim 3s linear forwards;
+}
+
+@keyframes toastTimerAnim {
+    from { width: 100%; }
+    to { width: 0%; }
+}

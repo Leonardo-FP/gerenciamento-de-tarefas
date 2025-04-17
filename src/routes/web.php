@@ -20,4 +20,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/tasks/store', [TaskController::class, 'storeTask'])->name('tasks.store');
     Route::post('/tasks/update', [TaskController::class, 'updateTask'])->name('tasks.update');
     Route::post('/tasks/updateStatus', [TaskController::class, 'updateStatus'])->name('tasks.updateStatus');
+    Route::post('/tasks/delete', [TaskController::class, 'deleteTask'])->name('tasks.delete');
+    Route::get('/tasks/filter', [TaskController::class, 'filter'])->name('tasks.filter');
 });

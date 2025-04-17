@@ -1,11 +1,19 @@
 @extends('templates.authenticated')
 
-@section('title', 'Suas tarefas')
+@section('title', 'Minhas tarefas')
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h2>Minhas Tarefas</h2>
     <a href="{{ route('tasks.create') }}" class="btn btn-primary" id="btn-nova-tarefa">Nova Tarefa</a>
+</div>
+
+<div class="mb-3">
+  <div class="btn-group" role="group" aria-label="Filtro de status">
+      <button class="btn btn-outline-primary filtro-status active" data-status="">Todas</button>
+      <button class="btn btn-outline-warning filtro-status" data-status="0">Pendentes</button>
+      <button class="btn btn-outline-success filtro-status" data-status="1">Concluídas</button>
+  </div>
 </div>
 
 <table class="table table-bordered table-hover">
@@ -113,6 +121,31 @@
     </div>
   </div>
 </div>
+
+<!-- Modal para confirmação de exclusão -->
+<div class="modal fade" id="modalExcluirTarefa" tabindex="-1" aria-labelledby="modalExcluirTarefaLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="formExcluirTarefa" action="{{ route('tasks.delete') }}" method="POST">
+        @csrf
+        <input type="hidden" name="id" id="tarefa-excluir-id">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalExcluirTarefaLabel">Excluir Tarefa</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <p>Tem certeza que deseja excluir a tarefa <strong id="tarefa-excluir-title"></strong>?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger">Excluir</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 @endsection
 
 @section('scripts')
