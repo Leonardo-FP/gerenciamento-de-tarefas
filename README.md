@@ -15,7 +15,7 @@ https://github.com/Leonardo-FP/gerenciamento-de-tarefas
 # CONFIGURAÇÃO DO AMBIENTE
 
 ## Após clonar, entre no projeto
-cd gerenciamento-de-tarefas
+cd gerenciamento-de-tarefas/src
 
 ## Copie o arquivo .env
 cp .env.example .env
@@ -38,9 +38,7 @@ docker exec -it laravel-php bash
 composer install
 
 ## Ajuste permissões de diretórios
-chmod -R 775 storage
-chown -R www-data:www-data storage
-chmod -R 775 storage/framework
+chmod -R 775 storage && chown -R www-data:www-data storage && chmod -R 775 storage/framework
 
 ## Gere a Key do Laravel
 php artisan key:generate
