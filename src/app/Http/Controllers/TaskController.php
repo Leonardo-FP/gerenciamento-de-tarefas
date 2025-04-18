@@ -30,16 +30,17 @@ class TaskController extends Controller
 
         $task = Tasks::create($validated);
 
+        if (!$task) {
+            return response()->json(['error' => 'Erro ao criar tarefa.'], 404);
+        }
+
+        // Armazenando a mensagem de sucesso na sessão para ser usada na próxima requisição
+        session()->flash('toast_message', 'Tarefa criada com sucesso!');
+        session()->flash('toast_type', 'primary'); 
+
         return response()->json([
             'success' => true,
             'message' => 'Tarefa criada com sucesso!',
-            'task' => [
-                'id'          => $task->id,
-                'title'       => $task->title,
-                'description' => $task->description,
-                'status'      => $task->status,
-                'created_at'  => $task->created_at->format('d/m/Y'),
-            ],
         ]);
     }
 
@@ -52,6 +53,10 @@ class TaskController extends Controller
         ]);
 
         $task = Tasks::find($validated['id']);
+
+        if (!$task) {
+            return response()->json(['error' => 'Tarefa não encontrada.'], 404);
+        }
 
         $task->update([
             'title'       => $validated['title'],
@@ -78,6 +83,10 @@ class TaskController extends Controller
         ]);
 
         $task = Tasks::find($validated['id']);
+
+        if (!$task) {
+            return response()->json(['error' => 'Tarefa não encontrada.'], 404);
+        }
 
         $task->update([
             'status'       => !$task->status,

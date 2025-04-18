@@ -152,6 +152,20 @@
 @section('scripts')
   <!-- Importa os scripts responsáveis pelo controle dos formulários -->
   <script src="{{ asset('js/tasks/index.js') }}"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Verifica se há mensagem armazenada na sessão, vinda da tela de cadastro
+      const toastMessage = "{{ session('toast_message') }}";
+      const toastType = "{{ session('toast_type') }}";
+      
+      // Se a mensagem existir, chama o Toast
+      if (toastMessage) {
+          notificarUsuario(toastMessage, toastType);
+      }
+    });
+  </script>
+  
 @endsection
 
 

@@ -28,7 +28,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'Credenciais inválidas.',
+            'email' => 'Credenciais inválidas',
         ])->withInput();
     }
 
@@ -46,9 +46,12 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        Auth::login($user);
+        if ($user) {
+            Auth::login($user);
 
-        return redirect()->route('home'); 
+            return redirect()->route('home'); 
+        }
+        
     }
 
     public function logout(Request $request)
