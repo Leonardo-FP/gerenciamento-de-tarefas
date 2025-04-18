@@ -14,10 +14,13 @@ https://github.com/Leonardo-FP/gerenciamento-de-tarefas
 
 # CONFIGURAÇÃO DO AMBIENTE
 
+## Após clonar, entre no projeto
+cd gerenciamento-de-tarefas
+
 ## Copie o arquivo .env
 cp .env.example .env
 
-## Verifique no .env as configurações do banco de dados e altere conforme a configuração do seu Docker
+## Verifique no .env as configurações do banco de dados e altere (caso necessário) conforme a configuração do seu Docker 
 DB_CONNECTION=mysql
 DB_HOST=laravel-mysql
 DB_PORT=3306

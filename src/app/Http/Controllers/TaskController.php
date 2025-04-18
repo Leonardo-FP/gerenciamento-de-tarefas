@@ -27,12 +27,20 @@ class TaskController extends Controller
             'description' => 'required|string',
             'status'      => 'required|bool',
         ]);
-        
+
         $task = Tasks::create($validated);
 
-        return redirect()
-            ->route('tasks.show')
-            ->with('success', 'Tarefa #'.$task->id.' criada com sucesso!');
+        return response()->json([
+            'success' => true,
+            'message' => 'Tarefa criada com sucesso!',
+            'task' => [
+                'id'          => $task->id,
+                'title'       => $task->title,
+                'description' => $task->description,
+                'status'      => $task->status,
+                'created_at'  => $task->created_at->format('d/m/Y'),
+            ],
+        ]);
     }
 
     public function updateTask(Request $request)

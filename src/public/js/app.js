@@ -12,3 +12,23 @@ function notificarUsuario(mensagem, tipo = 'success') {
     const toast = new bootstrap.Toast(toastEl[0]);
     toast.show();
 }
+
+// Função genérica para envio padrão de qualquer formulário
+function enviarFormulario(form, url, callback) {
+    $.ajax({
+        url,
+        method: 'POST',
+        data: form.serialize(),
+        success: callback,
+        error: (xhr) => {
+            if (xhr.status === 422) {
+                const erros = xhr.responseJSON.errors;
+                const mensagens = Object.values(erros).flat().join('\n');
+                alert('Erros de validação:\n' + mensagens);
+            } else {
+                alert('Ocorreu um erro ao processar sua requisição.');
+            }
+            console.error(xhr.responseText);
+        }
+    });
+}

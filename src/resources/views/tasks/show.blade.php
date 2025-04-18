@@ -147,12 +147,11 @@
     </div>
   </div>
 </div>
-
 @endsection
 
 @section('scripts')
   <!-- Importa os scripts responsáveis pelo controle dos formulários -->
-  <script src="{{ asset('js/tasks.js') }}"></script>
+  <script src="{{ asset('js/tasks/index.js') }}"></script>
 @endsection
 
 

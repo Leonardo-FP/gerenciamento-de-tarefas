@@ -86,20 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Função genérica para envio padrão de qualquer formulário
-    function enviarFormulario(form, url, callback) {
-        $.ajax({
-            url,
-            method: 'POST',
-            data: form.serialize(),
-            success: callback,
-            error: (xhr) => {
-                alert('Ocorreu um erro ao processar sua requisição.');
-                console.error(xhr.responseText);
-            }
-        });
-    }
-
     // Realiza a submissão dos formulários quando são chamados na view. Além disso, atualiza a linha afetada e esconde o modal
     formEditar.on('submit', (e) => {
         e.preventDefault();
